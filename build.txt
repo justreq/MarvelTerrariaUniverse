@@ -1,0 +1,4 @@
+displayName = Marvel Terraria Universe
+author = MTU Developers
+version = 1.0.0.0
+homepage = https://discord.gg/DpVCpPBgU9

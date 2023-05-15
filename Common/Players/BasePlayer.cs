@@ -5,6 +5,8 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
+using MarvelTerrariaUniverse.Common.UIElements.SuitModuleHubUI;
+using MarvelTerrariaUniverse.Common.UIElements;
 
 namespace MarvelTerrariaUniverse.Common.Players;
 public class BasePlayer : ModPlayer
@@ -30,7 +32,14 @@ public class BasePlayer : ModPlayer
 
     public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo)
     {
+        if (drawInfo.drawPlayer == UITransformationCharacter.preview)
+        {
+            drawInfo.bodyGlowColor = Color.White;
+            drawInfo.armGlowColor = Color.White;
+        }
+
         if (!BodyColor.TryGetValue(Player.body, out Func<Color> color)) return;
+
 
         drawInfo.bodyGlowColor = color();
         drawInfo.armGlowColor = color();

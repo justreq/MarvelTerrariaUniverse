@@ -1,5 +1,6 @@
 ﻿using MarvelTerrariaUniverse.AssetManager;
 using MarvelTerrariaUniverse.Common.Players;
+using MarvelTerrariaUniverse.Common.UIElements;
 using MarvelTerrariaUniverse.Common.UIElements.SuitModuleHubUI;
 using MarvelTerrariaUniverse.Content.TileEntities;
 using MarvelTerrariaUniverse.Content.Tiles;
@@ -156,25 +157,31 @@ public class SuitModuleHubUIState : UIState
             SuitGridsContentList.Add(e);
         });
 
-        SuitGridsContentList.Add(new UIText("Fabricate Suit"));
+        // SuitGridsContentList.Add(new UIText("Fabricate Suit"));
 
-        FabricateSuitGrid = new UIGrid().With(e =>
+        /*FabricateSuitGrid = new UIGrid().With(e =>
         {
             e.Width = StyleDimension.FromPixelsAndPercent(-16f, 1f);
             e.ListPadding = GridPadding;
             SuitGridsContentList.Add(e);
-        });
+        });*/
 
         #endregion
 
         #region Suit Info Panel
+
+        SuitInfoPanel.AddElement(new UIText("").With(e =>
+        {
+            e.HAlign = 0.5f;
+            e.VAlign = 0.5f;
+        }));
 
         #endregion
     }
 
     public override void Update(GameTime gameTime)
     {
-        if (Main.keyState.IsKeyDown(Keys.Escape)) Visible = false;
+        if (Main.keyState.IsKeyDown(Keys.Escape)) ToggleVisible(false, false);
 
         if (ContentContainer.IsMouseHovering)
         {
@@ -185,20 +192,18 @@ public class SuitModuleHubUIState : UIState
         UpdateEquipSuitGrid();
     }
 
-    public void ToggleVisible(bool visible)
+    public void ToggleVisible(bool visible, bool playSound = true)
     {
-        SoundEngine.PlaySound(visible ? SoundID.MenuOpen : SoundID.MenuClose);
+        if (playSound) SoundEngine.PlaySound(visible ? SoundID.MenuOpen : SoundID.MenuClose);
         Visible = visible;
 
         ChangeState(State.Grids);
     }
 
-    public void UpdateEquipSuitGrid()
+    public static Dictionary<Point16, int?> NearbyDisplayCases()
     {
-        if (Main.gameMenu) return;
-
-        List<int?> foundTiles = new();
-        List<Point16> checkedTiles = new();
+        Dictionary<Point16, int?> data = new();
+        List<Point16> checkedTileCoords = new();
 
         var suitModuleHubPosition = Main.LocalPlayer.GetModPlayer<IronManPlayer>().LastAccessedSuitModuleHubPosition;
 
@@ -208,46 +213,55 @@ public class SuitModuleHubUIState : UIState
             {
                 var origin = TileUtils.GetTileOrigin(i, j);
 
-                if (Framing.GetTileSafely(i, j).TileType != ModContent.TileType<DisplayCase>() || checkedTiles.Contains(origin)) continue;
+                if (Framing.GetTileSafely(i, j).TileType != ModContent.TileType<DisplayCase>() || checkedTileCoords.Contains(origin)) continue;
 
                 var entity = (DisplayCaseTileEntity)TileEntity.ByID[ModContent.GetInstance<DisplayCaseTileEntity>().Find(origin.X, origin.Y)];
 
-                checkedTiles.Add(origin);
-                foundTiles.Add(entity.mark);
+                checkedTileCoords.Add(origin);
+                data.Add(origin, entity.mark);
             }
         }
 
-        if (!displayCases.SequenceEqual(foundTiles))
+        return data;
+    }
+
+    public void UpdateEquipSuitGrid()
+    {
+        if (Main.gameMenu) return;
+
+        var nearbyDisplayCases = NearbyDisplayCases();
+
+        if (!displayCases.SequenceEqual(nearbyDisplayCases.Values))
         {
             EquipSuitGrid.Clear();
 
             GridElementSize = EquipSuitGrid.GetOuterDimensions().Width / GridColumnCount - GridPadding;
-            foundTiles.ForEach(i =>
+            nearbyDisplayCases.Values.ToList().ForEach(i =>
             {
                 EquipSuitGrid.Add(new SuitGridElement(GridElementSize, i).With(e =>
                 {
-                    e.associatedDisplayCase = checkedTiles[foundTiles.IndexOf(i)];
+                    e.associatedDisplayCase = nearbyDisplayCases.Keys.ToList()[nearbyDisplayCases.Values.ToList().IndexOf(i)];
                     e.OnLeftClick += EquipButtonLeftClick;
                     e.OnRightClick += EquipButtonRightClick;
                 }));
             });
 
-            EquipSuitGrid.Height = StyleDimension.FromPixels((float)Math.Ceiling((double)((double)foundTiles.Count / GridColumnCount)) * (GridPadding + GridElementSize));
+            EquipSuitGrid.Height = StyleDimension.FromPixels((float)Math.Ceiling((double)((double)nearbyDisplayCases.Values.Count / GridColumnCount)) * (GridPadding + GridElementSize));
 
-            FabricateSuitGrid.Clear();
+            // FabricateSuitGrid.Clear();
 
-            for (int i = 1; i <= 7; i++)
+            /*for (int i = 1; i <= MarvelTerrariaUniverse.IronManSuitMarkCount; i++)
             {
                 FabricateSuitGrid.Add(new SuitGridElement(GridElementSize, i).With(e =>
                 {
                     e.OnLeftClick += FabricateButtonClick;
                 }));
-            }
+            }*/
 
-            FabricateSuitGrid.Height = StyleDimension.FromPixels((float)Math.Ceiling((double)((double)FabricateSuitGrid.Count / GridColumnCount)) * (GridPadding + GridElementSize));
+            // FabricateSuitGrid.Height = StyleDimension.FromPixels((float)Math.Ceiling((double)((double)FabricateSuitGrid.Count / GridColumnCount)) * (GridPadding + GridElementSize));
         }
 
-        displayCases = foundTiles;
+        displayCases = nearbyDisplayCases.Values.ToList();
     }
 
     public void EquipButtonLeftClick(UIMouseEvent evt, UIElement listeningElement)
@@ -310,7 +324,22 @@ public class SuitModuleHubUIState : UIState
             ContentContainer.Append(SuitInfoPanel);
             ShowInfoFor = mark;
 
-            SuitInfoPanel.AddElement(new SuitBanner((int)mark));
+            var text = (UIText)SuitInfoPanel.Children.First();
+            text.SetText($"Info / Fabrication / Repair menu for Mark {ShowInfoFor}. Actual menu coming soon.");
+
+            /*var banner = SuitInfoPanel.AddElement(new SuitBanner((int)mark, newSuit));
+
+            banner.cycleSuitInfoButtons.ForEach(e =>
+            {
+                if (banner.cycleSuitInfoButtons.IndexOf(e) == 0) e.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) =>
+                {
+                    ChangeState(State.Info, ShowInfoFor == 1 ? MarvelTerrariaUniverse.IronManSuitMarkCount : ShowInfoFor - 1, true);
+                };
+                else e.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) =>
+                {
+                    ChangeState(State.Info, ShowInfoFor == MarvelTerrariaUniverse.IronManSuitMarkCount ? 1 : ShowInfoFor + 1, true);
+                };
+            });*/
         }
         else
         {

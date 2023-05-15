@@ -14,6 +14,8 @@ public enum Transformations
 
 public class MarvelTerrariaUniverse : Mod
 {
+    public const int IronManSuitMarkCount = 7;
+
     public static Dictionary<List<string>, EquipType> TransformationTextures = new();
     public static HashSet<string> TransformationTypes = new();
     // ?
@@ -38,7 +40,7 @@ public class MarvelTerrariaUniverse : Mod
             TransformationTypes.Add(name);
         });
 
-        for (int i = 1; i <= 7; i++)
+        for (int i = 1; i <= MarvelTerrariaUniverse.IronManSuitMarkCount; i++)
         {
             AddContent(new SuitModuleItem(i));
         }

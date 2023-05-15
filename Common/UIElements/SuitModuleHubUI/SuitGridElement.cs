@@ -24,6 +24,8 @@ public class SuitGridElement : UIPanel
 
     public Point16? associatedDisplayCase = null;
 
+    public UIPanel Border { get; set; }
+
     public SuitGridElement(float size, int? mark, string alias = null) : base(Assets.ToTexture2D(Assets.Textures.UI.SuitGridElementPanelBackground), Assets.ToTexture2D(Assets.Textures.UI.SuitGridElementPanelBorder))
     {
         this.size = size;
@@ -37,17 +39,37 @@ public class SuitGridElement : UIPanel
         OverflowHidden = true;
         SetPadding(0f);
 
-        if (mark == null) return;
-
-        suitPreview = this.AddElement(new UITransformationCharacter($"IronManMark{mark}").With(e =>
+        if (mark != null)
         {
-            e.HAlign = 0.5f;
-            e.VAlign = 0.5f;
+            this.AddElement(new UIText(mark.ToString(), 0.8f).With(e =>
+            {
+                e.Left = StyleDimension.FromPixels(5);
+                e.Top = StyleDimension.FromPixels(5);
+            }));
+
+            suitPreview = this.AddElement(new UITransformationCharacter($"IronManMark{mark}", 2f).With(e =>
+            {
+                e.HAlign = 0.5f;
+                e.VAlign = 0.5f;
+                e.Left = StyleDimension.FromPixels(-13f);
+                e.Top = StyleDimension.FromPixels(-6f);
+            }));
+        }
+
+        Border = this.AddElement(new UIPanel(Assets.ToTexture2D(Assets.Textures.UI.SuitGridElementPanelBackground), Assets.ToTexture2D(Assets.Textures.UI.SuitGridElementPanelBorder)).With(e =>
+        {
+            e.Width = StyleDimension.FromPixels(size);
+            e.Height = StyleDimension.FromPixels(size);
+            e.BackgroundColor = Color.Transparent;
+            e.BorderColor = Color.Black;
+            e.OverflowHidden = true;
+            e.SetPadding(0f);
         }));
     }
 
     public override int CompareTo(object obj)
     {
+        // expectation: if null, put it ahead of everything else, otherwise order it in ascending order
         SuitGridElement other = obj as SuitGridElement;
         if (mark == null || other.mark == null) return -1;
         return ((int)mark).CompareTo((int)other.mark);
@@ -61,22 +83,9 @@ public class SuitGridElement : UIPanel
 
         if (IsMouseHovering)
         {
-            BorderColor = Main.OurFavoriteColor;
-            if (mark != null) Main.hoverItemName = $"Mark {mark}{(alias == null ? "" : $" \"{alias}\"")}";
+            Border.BorderColor = Main.OurFavoriteColor;
+            Main.hoverItemName = mark != null ? $"Mark {mark}{(alias == null ? "" : $" \"{alias}\"")}" : Main.LocalPlayer.GetModPlayer<IronManPlayer>().Mark != null ? "Unequip suit" : "";
         }
-        else BorderColor = Color.Black;
-
-        if (suitPreview == null) return;
-
-        if (mark != 1)
-        {
-            HelmetGlowmask.RegisterData(EquipLoader.GetEquipSlot(mod, suitPreview.transformation, EquipType.Head), new DrawLayerData()
-            {
-                Texture = Assets.ToTexture2D(Assets.Textures.Glowmasks.IronMan.Faceplate0),
-                Color = (drawInfo) => Color.White
-            });
-        }
-
-        // BasePlayer.RegisterData(EquipLoader.GetEquipSlot(mod, suitPreview.transformation, EquipType.Body), () => Color.White);
+        else Border.BorderColor = Color.Black;
     }
 }

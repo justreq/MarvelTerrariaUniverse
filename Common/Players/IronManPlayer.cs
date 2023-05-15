@@ -336,7 +336,7 @@ public class IronManPlayer : ModPlayer
 
         var path = $"{Assets.Textures.Path}/Glowmasks/IronMan";
 
-        if (SuitOn && HelmetOn && FaceplateFrame != 2 && FaceplateOn)
+        if (SuitOn && HelmetOn && FaceplateFrame != 2 && FaceplateOn && Mark != 1)
         {
             HelmetGlowmask.RegisterData(EquipLoader.GetEquipSlot(Mod, headName, EquipType.Head), new DrawLayerData()
             {

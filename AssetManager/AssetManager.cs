@@ -118,7 +118,8 @@ public partial class Assets
         }
         public partial class UI
         {
-            public const string IconAdd = $"{Path}/UI/IconAdd";
+            public const string ButtonNext = $"{Path}/UI/ButtonNext";
+            public const string ButtonPrevious = $"{Path}/UI/ButtonPrevious";
             public const string SuitGridElementPanelBackground = $"{Path}/UI/SuitGridElementPanelBackground";
             public const string SuitGridElementPanelBorder = $"{Path}/UI/SuitGridElementPanelBorder";
         }

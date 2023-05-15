@@ -30,7 +30,7 @@ public class DisplayCaseTileEntity : DrawableTileEntity
         drawPlayer.legs = EquipLoader.GetEquipSlot(Mod, $"IronManMark{mark}", EquipType.Legs);
         drawPlayer.direction = direction;
 
-        Main.PlayerRenderer.DrawPlayer(Main.Camera, drawPlayer, Position.ToWorldCoordinates() - new Vector2(-6f - direction, -10f), 0f, drawPlayer.Hitbox.Size() / 2);
+        Main.PlayerRenderer.DrawPlayer(Main.Camera, drawPlayer, Position.ToWorldCoordinates() - new Vector2(-6f, -10f), 0f, drawPlayer.Hitbox.Size() / 2);
     }
 
     public override void SaveData(TagCompound tag)

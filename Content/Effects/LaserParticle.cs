@@ -2,12 +2,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using Terraria;
 
 namespace MarvelTerrariaUniverse.Content.Effects;
 
 public class LaserParticle : Particle
 {
-    float shrinkspd = 0.1f;
+    float shrinkspd = 0.8f;
 
     private static Asset<Texture2D> tex = Assets.ToTexture2D(Assets.Textures.Effects.LaserEffect);
     public override void Init()
@@ -24,7 +25,7 @@ public class LaserParticle : Particle
     {
         base.Update();
 
-        scale.Y *= shrinkspd;
+        scale.Y *= Main.mouseRight || Main.mouseMiddle ? 0f : shrinkspd;
         if (scale.Y <= 0.01f)
             Destroy();
     }

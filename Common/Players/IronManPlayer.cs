@@ -21,17 +21,9 @@ using Terraria.ModLoader.IO;
 using MarvelTerrariaUniverse.Common.UIElements.SuitModuleHubUI;
 using MarvelTerrariaUniverse.Common.UIElements;
 using MarvelTerrariaUniverse.Common.SuitModuleHubUI;
+using MarvelTerrariaUniverse.Core.IronMan;
 
 namespace MarvelTerrariaUniverse.Common.Players;
-public enum Weapon
-{
-    Repulsor = 0,
-    Unibeam = 1,
-    ShoulderGun = 2,
-    ForearmMissile = 3,
-    Flare = 4
-}
-
 public class IronManPlayer : ModPlayer
 {
     public bool CanSelectSuit = false;
@@ -40,7 +32,9 @@ public class IronManPlayer : ModPlayer
 
     public int RotationCooldown = 90;
 
-    public bool IsTransformed => Player.GetModPlayer<BasePlayer>().transformation == Transformations.IronMan;
+    public bool IsTransformed => Player.GetModPlayer<BasePlayer>().transformation == MarvelTerrariaUniverse.Transformation.IronMan;
+
+    public IronManSuit IronManSuit = null;
 
     public int? Mark = null;
 
@@ -64,19 +58,11 @@ public class IronManPlayer : ModPlayer
     public bool SuitOn = true;
     public int SuitDirection = 1;
 
-    public List<Weapon> RequestedWeapons = new();
-
-    public int RepulsorCooldown = 60;
-    public SlotId RepulsorChargeSoundSlot;
-    public int UnibeamCooldown = 180;
-    public SlotId UnibeamChargeSoundSlot;
-
-    public bool WeaponRequested(Weapon weapon) => RequestedWeapons.Contains(weapon);
-
     public void EquipSuit(int? mark = null)
     {
         Mark = mark;
-        Player.GetModPlayer<BasePlayer>().transformation = mark == null ? Transformations.None : Transformations.IronMan;
+        IronManSuit = mark == null ? null : IronManAbilities.IronManSuits[(int)mark - 1];
+        Player.GetModPlayer<BasePlayer>().transformation = mark == null ? MarvelTerrariaUniverse.Transformation.None : MarvelTerrariaUniverse.Transformation.IronMan;
 
         if (mark == null) ResetEverything();
     }
@@ -85,6 +71,7 @@ public class IronManPlayer : ModPlayer
     {
         if (!soft)
         {
+            IronManSuit = null;
             Mark = null;
             SuitEjected = false;
             SuitOn = true;
@@ -103,8 +90,6 @@ public class IronManPlayer : ModPlayer
         FlightFlameFramerate = 5;
         HelmetDropped = false;
         HelmetOn = true;
-        RepulsorCooldown = 60;
-        UnibeamCooldown = 180;
     }
 
     public void FlightAnimation()
@@ -154,7 +139,7 @@ public class IronManPlayer : ModPlayer
             else targetRot = 0.8f * -Player.direction;
         }
 
-        HeadRotation = Utils.AngleLerp(HeadRotation, targetRot, 15f * (1f / 60));
+        HeadRotation = HeadRotation.AngleLerp(targetRot, 15f * (1f / 60));
     }
 
     public void FaceplateAnimation()
@@ -202,107 +187,6 @@ public class IronManPlayer : ModPlayer
         }
     }
 
-    public void SpawnLaser(Vector2 position, Vector2 velocity, float scale)
-    {
-        var proj = Projectile.NewProjectile(Terraria.Entity.GetSource_None(), position, velocity, ModContent.ProjectileType<Laser>(), 4, 4, Player.whoAmI, 0, 1200);
-        Main.projectile[proj].scale = scale;
-    }
-
-    public void Repulsor()
-    {
-        if (!WeaponRequested(Weapon.Repulsor)) return;
-
-        float angle = Player.AngleTo(Main.MouseWorld) - MathHelper.PiOver2 - Player.fullRotation;
-        Player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, angle);
-
-        RepulsorCooldown--;
-
-        if (RepulsorCooldown <= 0)
-        {
-            if (RepulsorCooldown == 0) SoundEngine.PlaySound(Assets.ToSoundStyle(Assets.Sounds.IronMan.LaserBlast));
-            SpawnLaser(Player.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, angle), Player.DirectionTo(Main.MouseWorld), 0.3f);
-        }
-    }
-
-    public void Unibeam()
-    {
-        if (!WeaponRequested(Weapon.Unibeam)) return;
-
-        UnibeamCooldown--;
-
-        if (UnibeamCooldown <= 0)
-        {
-            if (UnibeamCooldown == 0) SoundEngine.PlaySound(Assets.ToSoundStyle(Assets.Sounds.IronMan.LaserBlast));
-            SpawnLaser(new(Player.Center.X + 4f * Player.direction, Player.Center.Y + 2f), Player.fullRotation.ToRotationVector2() * Player.direction, 0.5f);
-        }
-    }
-
-    public List<NPC> GetNearestXNPCs(float maxDistance, int count)
-    {
-        return Main.npc.SkipLast(1).Where(e => e.active && e.WithinRange(Player.Center, maxDistance)).OrderBy(e => e.DistanceSQ(Player.Center)).Take(count).ToList();
-    }
-
-    List<NPC> npcs = new();
-    List<NPC> targets = new();
-    int timer = 15;
-    int timer2 = 60;
-    public void ShoulderGun()
-    {
-        if (!WeaponRequested(Weapon.ShoulderGun)) return;
-
-        if (npcs.Count == 0 && timer2 == 60)
-        {
-            npcs = GetNearestXNPCs(750, 12);
-
-            if (npcs.Count == 0)
-            {
-                RequestedWeapons.Remove(Weapon.ShoulderGun);
-                return;
-            }
-        }
-
-        timer--;
-
-        if (timer == 0 && npcs.Count > 0)
-        {
-            timer = 15;
-
-            targets.Add(npcs.First());
-            npcs.RemoveAt(0);
-        }
-
-        if (targets.Count > 0)
-        {
-            var e = targets.Last();
-
-            Dust.NewDust(e.position, e.width, e.height, DustID.FireworksRGB, newColor: Color.White);
-        }
-
-        if (npcs.Count == 0)
-        {
-            timer2--;
-
-            targets.ForEach(e =>
-            {
-                Dust.NewDust(e.position, e.width, e.height, DustID.FireworksRGB, newColor: Color.Red);
-            });
-
-            if (timer2 == 0)
-            {
-                targets.ForEach(e =>
-                {
-                    Projectile.NewProjectile(Terraria.Entity.GetSource_None(), Player.Center, e.position - Player.position, ProjectileID.Bullet, 4, 4, Player.whoAmI);
-                });
-
-                targets.Clear();
-                RequestedWeapons.Remove(Weapon.ShoulderGun);
-
-                timer = 15;
-                timer2 = 60;
-            }
-        }
-    }
-
     public override void ResetEffects()
     {
 
@@ -316,9 +200,6 @@ public class IronManPlayer : ModPlayer
         FaceplateAnimation();
         DropHelmet();
         EjectSuit();
-        Repulsor();
-        Unibeam();
-        ShoulderGun();
     }
 
     public override void FrameEffects()
@@ -418,63 +299,17 @@ public class IronManPlayer : ModPlayer
             SoundEngine.PlaySound(Assets.ToSoundStyle(Assets.Sounds.IronMan.Depower));
             SuitOn = false;
         }
-
-        if (triggersSet.MouseRight && !Player.mouseInterface)
-        {
-            if (!WeaponRequested(Weapon.Repulsor) && RepulsorCooldown == 60)
-            {
-                RepulsorChargeSoundSlot = SoundEngine.PlaySound(Assets.ToSoundStyle(Assets.Sounds.IronMan.RepulsorCharge));
-                RequestedWeapons.Add(Weapon.Repulsor);
-            }
-        }
-        else
-        {
-            if (RepulsorCooldown != 60)
-            {
-                if (SoundEngine.TryGetActiveSound(RepulsorChargeSoundSlot, out var sound))
-                {
-                    sound.Stop();
-                    SoundEngine.PlaySound(Assets.ToSoundStyle(Assets.Sounds.IronMan.Depower));
-                }
-            }
-
-            RequestedWeapons.Remove(Weapon.Repulsor);
-            RepulsorCooldown = 60;
-        }
-
-        if (triggersSet.MouseMiddle && !Player.mouseInterface)
-        {
-            if (!WeaponRequested(Weapon.Unibeam) && UnibeamCooldown == 180)
-            {
-                UnibeamChargeSoundSlot = SoundEngine.PlaySound(Assets.ToSoundStyle(Assets.Sounds.IronMan.UnibeamCharge));
-                RequestedWeapons.Add(Weapon.Unibeam);
-            }
-        }
-        else
-        {
-            if (UnibeamCooldown != 180)
-            {
-                if (SoundEngine.TryGetActiveSound(UnibeamChargeSoundSlot, out var sound))
-                {
-                    sound.Stop();
-                    SoundEngine.PlaySound(Assets.ToSoundStyle(Assets.Sounds.IronMan.Depower));
-                }
-            }
-
-            RequestedWeapons.Remove(Weapon.Unibeam);
-            UnibeamCooldown = 180;
-        }
-
-        if (triggersSet.Hotbar1 && !WeaponRequested(Weapon.ShoulderGun)) RequestedWeapons.Add(Weapon.ShoulderGun);
     }
 
     public override void SaveData(TagCompound tag)
     {
         tag.SaveNullable("mark", Mark);
+        if (IronManSuit != null) tag["ironManSuit"] = IronManSuit;
     }
 
     public override void LoadData(TagCompound tag)
     {
         Mark = tag.LoadNullable<int>("mark");
+        tag.TryGet("ironManSuit", ref IronManSuit);
     }
 }

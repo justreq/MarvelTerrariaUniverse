@@ -18,7 +18,7 @@ public sealed class FlightFlame : PlayerDrawLayer
         var basePlayer = drawInfo.drawPlayer.GetModPlayer<BasePlayer>();
         var ironManPlayer = drawInfo.drawPlayer.GetModPlayer<IronManPlayer>();
 
-        return basePlayer.transformation == Transformations.IronMan && ironManPlayer.Mark > 1 && ironManPlayer.Flying;
+        return basePlayer.transformation == MarvelTerrariaUniverse.Transformation.IronMan && ironManPlayer.Mark > 1 && ironManPlayer.Flying;
     }
 
     protected override void Draw(ref PlayerDrawSet drawInfo)

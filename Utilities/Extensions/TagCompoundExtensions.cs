@@ -1,8 +1,19 @@
-﻿using Terraria.ModLoader.IO;
+﻿using System.Linq;
+using Terraria.ModLoader.IO;
 
 namespace MarvelTerrariaUniverse.Utilities.Extensions;
 public static class TagCompoundExtensions
 {
+    public static bool TryGet<T>(this TagCompound tag, string name, ref T value)
+    {
+        if (tag.ContainsKey(name))
+        {
+            value = (T)tag[name];
+            return true;
+        }
+        return false;
+    }
+
     public static void SaveNullable<T>(this TagCompound tag, string name, T? value) where T : struct
     {
         tag[name + "_hasValue"] = value.HasValue;

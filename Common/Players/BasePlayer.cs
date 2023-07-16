@@ -11,7 +11,7 @@ using MarvelTerrariaUniverse.Common.UIElements;
 namespace MarvelTerrariaUniverse.Common.Players;
 public class BasePlayer : ModPlayer
 {
-    public Transformations transformation = Transformations.None;
+    public MarvelTerrariaUniverse.Transformation transformation = MarvelTerrariaUniverse.Transformation.None;
 
     private static Dictionary<int, Func<Color>> BodyColor { get; set; }
 
@@ -52,6 +52,6 @@ public class BasePlayer : ModPlayer
 
     public override void LoadData(TagCompound tag)
     {
-        transformation = (Transformations)(int)tag["transformation"];
+        transformation = (MarvelTerrariaUniverse.Transformation)(int)tag["transformation"];
     }
 }

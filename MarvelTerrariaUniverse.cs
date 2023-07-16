@@ -1,4 +1,5 @@
 using MarvelTerrariaUniverse.Content.Items.IronMan;
+using MarvelTerrariaUniverse.Core.IronMan;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,19 +7,19 @@ using Terraria.ModLoader;
 
 namespace MarvelTerrariaUniverse;
 
-public enum Transformations
-{
-    None = 0,
-    IronMan = 1
-}
-
 public class MarvelTerrariaUniverse : Mod
 {
+    public enum Transformation
+    {
+        None = 0,
+        IronMan = 1
+    }
+
     public const int IronManSuitMarkCount = 7;
 
     public static Dictionary<List<string>, EquipType> TransformationTextures = new();
     public static HashSet<string> TransformationTypes = new();
-    // ?
+
     public override void Load()
     {
         GetFileNames().Where(e => e.StartsWith("Assets/Textures/Transformations")).ToList().ForEach(file =>
@@ -40,7 +41,7 @@ public class MarvelTerrariaUniverse : Mod
             TransformationTypes.Add(name);
         });
 
-        for (int i = 1; i <= MarvelTerrariaUniverse.IronManSuitMarkCount; i++)
+        for (int i = 1; i <= IronManSuitMarkCount; i++)
         {
             AddContent(new SuitModuleItem(i));
         }

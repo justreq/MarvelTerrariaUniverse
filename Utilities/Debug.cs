@@ -66,7 +66,7 @@ class AutoJoinWorldSystem : ModSystem
             enterCharacterSelectMenu = false;
             Main.OpenCharacterSelectUI();
 
-            var player = Main.PlayerList.First(d => d.Name == "Arnimox");
+            var player = Main.PlayerList.First(d => d.Name == "Mod Testing");
             Main.SelectPlayer(player);
 
             Main.OpenWorldSelectUI();

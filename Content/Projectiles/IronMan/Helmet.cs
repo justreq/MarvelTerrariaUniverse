@@ -48,7 +48,7 @@ public class Helmet : ModProjectile
         Projectile.velocity.X = Projectile.velocity.X * 0.97f;
         Projectile.rotation += Projectile.velocity.X * 0.1f;
 
-        if (player.GetModPlayer<BasePlayer>().transformation != Transformations.IronMan || Projectile.Hitbox.Contains(Main.MouseWorld.ToPoint()) && PlayerInput.Triggers.JustPressed.MouseLeft && player.position.WithinRange(Projectile.position, 4 * 16f))
+        if (player.GetModPlayer<BasePlayer>().transformation != MarvelTerrariaUniverse.Transformation.IronMan || Projectile.Hitbox.Contains(Main.MouseWorld.ToPoint()) && PlayerInput.Triggers.JustPressed.MouseLeft && player.position.WithinRange(Projectile.position, 4 * 16f))
         {
             for (int i = 0; i < 10; i++)
             {

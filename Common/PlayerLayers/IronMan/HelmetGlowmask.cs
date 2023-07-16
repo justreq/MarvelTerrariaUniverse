@@ -37,7 +37,7 @@ public class HelmetGlowmask : PlayerDrawLayer
         var basePlayer = drawInfo.drawPlayer.GetModPlayer<BasePlayer>();
         var ironManPlayer = drawInfo.drawPlayer.GetModPlayer<IronManPlayer>();
 
-        return (basePlayer.transformation == Transformations.IronMan && ironManPlayer.Mark > 1) || drawInfo.drawPlayer == UITransformationCharacter.preview;
+        return (basePlayer.transformation == MarvelTerrariaUniverse.Transformation.IronMan && ironManPlayer.Mark > 1) || drawInfo.drawPlayer == UITransformationCharacter.preview;
     }
 
     protected override void Draw(ref PlayerDrawSet drawInfo)

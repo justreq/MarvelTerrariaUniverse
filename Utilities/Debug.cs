@@ -1,5 +1,4 @@
 ﻿using MarvelTerrariaUniverse.Common.Players;
-using MarvelTerrariaUniverse.Common.SuitModuleHubUI;
 using Microsoft.Xna.Framework;
 using System;
 using System.Linq;
@@ -7,7 +6,6 @@ using System.Reflection;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.GameContent.UI.States;
-using Terraria.GameInput;
 using Terraria.IO;
 using Terraria.ModLoader;
 using Terraria.UI;
@@ -18,30 +16,6 @@ namespace MarvelTerrariaUniverse.Utilities;
 // DONT TOUCH ANYTHING HERE BTW PLS THX BYE LUV YA BYE <3
 
 #if DEBUG
-class ReloadUISystem : ModSystem
-{
-    public static ModKeybind ReloadUI { get; private set; }
-
-    public override void Load()
-    {
-        ReloadUI = KeybindLoader.RegisterKeybind(Mod, "ReloadUI", "R");
-    }
-
-    public override void Unload()
-    {
-        ReloadUI = null;
-    }
-}
-
-class ReloadUIPlayer : ModPlayer
-{
-    public override void ProcessTriggers(TriggersSet triggersSet)
-    {
-        var system = ModContent.GetInstance<SuitModuleHubUISystem>();
-
-        if (ReloadUISystem.ReloadUI.JustPressed && !Main.dedServ) system.LoadUI();
-    }
-}
 
 class AutoJoinWorldSystem : ModSystem
 {
@@ -92,10 +66,10 @@ class EquipCommand : ModCommand
 
     public override void Action(CommandCaller caller, string input, string[] args)
     {
-        var basePlayer = caller.Player.GetModPlayer<BasePlayer>();
+
         var ironManPlayer = caller.Player.GetModPlayer<IronManPlayer>();
 
-        if (args.Length == 0) ironManPlayer.EquipSuit();
+        if (args.Length == 0) ironManPlayer.UnequipSuit();
         else
         {
             if (!int.TryParse(args[0], out int _))
@@ -106,8 +80,7 @@ class EquipCommand : ModCommand
 
             ironManPlayer.EquipSuit(int.Parse(args[0]));
         }
-
-        Main.NewText($"{basePlayer.transformation} {ironManPlayer.Mark}");
     }
 }
+
 #endif

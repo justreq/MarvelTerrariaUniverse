@@ -1,26 +1,28 @@
 ﻿using Terraria.ModLoader;
 
-namespace MarvelTerrariaUniverse.Common.Systems;
 public class KeybindSystem : ModSystem
 {
-    public static ModKeybind ToggleFlight { get; set; }
-    public static ModKeybind ToggleFaceplate { get; set; }
-    public static ModKeybind DropHelmet { get; set; }
-    public static ModKeybind EjectSuit { get; set; }
+    public static ModKeybind ToggleFaceplate;
+    public static ModKeybind ToggleFlight;
+    public static ModKeybind EjectSuit;
+
+    public static void RegisterKeybindWithCategory(ref ModKeybind variableSavedTo, Mod mod, string category, string name, string defaultBinding)
+    {
+        variableSavedTo = KeybindLoader.RegisterKeybind(mod, name, defaultBinding);
+        MarvelTerrariaUniverse.MarvelTerrariaUniverse.CategorizedModKeybinds.Add(name, category);
+    }
 
     public override void Load()
     {
-        ToggleFlight = KeybindLoader.RegisterKeybind(Mod, "ToggleFlight", "F");
-        ToggleFaceplate = KeybindLoader.RegisterKeybind(Mod, "ToggleFaceplate", "G");
-        DropHelmet = KeybindLoader.RegisterKeybind(Mod, "DropHelmet", "H");
-        EjectSuit = KeybindLoader.RegisterKeybind(Mod, "EjectSuit", "X");
+        RegisterKeybindWithCategory(ref ToggleFaceplate, Mod, "Iron Man", "ToggleFaceplate", "G");
+        RegisterKeybindWithCategory(ref ToggleFlight, Mod, "Iron Man", "ToggleFlight", "F");
+        RegisterKeybindWithCategory(ref EjectSuit, Mod, "Iron Man", "EjectSuit", "X");
     }
 
     public override void Unload()
     {
-        ToggleFlight = null;
         ToggleFaceplate = null;
-        DropHelmet = null;
+        ToggleFlight = null;
         EjectSuit = null;
     }
 }

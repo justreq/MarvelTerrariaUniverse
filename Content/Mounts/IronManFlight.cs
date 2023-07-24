@@ -1,5 +1,4 @@
 ﻿using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace MarvelTerrariaUniverse.Content.Mounts;
@@ -43,12 +42,6 @@ public class IronManFlight : ModMount
         MountData.swimFrameCount = 0;
         MountData.swimFrameDelay = 0;
         MountData.swimFrameStart = 0;
-
-        if (!Main.dedServ || Main.netMode != NetmodeID.Server)
-        {
-            MountData.textureWidth = MountData.backTexture.Width();
-            MountData.textureHeight = MountData.backTexture.Height();
-        }
     }
 
     public override void SetMount(Player player, ref bool skipDust)

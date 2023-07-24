@@ -1,0 +1,192 @@
+Items: {
+	Mk1Chestplate: {
+		Tooltip: ""
+		DisplayName: Iron Man Chestplate (Mark 1)
+	}
+
+	Mk1Helmet: {
+		Tooltip: ""
+		DisplayName: Iron Man Helmet (Mark 1)
+	}
+
+	Mk1Leggings: {
+		Tooltip: ""
+		DisplayName: Iron Man Leggings (Mark 1)
+	}
+
+	Mk2Chestplate: {
+		Tooltip: ""
+		DisplayName: Iron Man Chestplate (Mark 2)
+	}
+
+	Mk2Helmet: {
+		Tooltip: ""
+		DisplayName: Iron Man Helmet (Mark 2)
+	}
+
+	Mk2Leggings: {
+		Tooltip: ""
+		DisplayName: Iron Man Leggings (Mark 2)
+	}
+
+	Mk3Chestplate: {
+		Tooltip: ""
+		DisplayName: Iron Man Chestplate (Mark 3)
+	}
+
+	Mk3Helmet: {
+		Tooltip: ""
+		DisplayName: Iron Man Helmet (Mark 3)
+	}
+
+	Mk3Leggings: {
+		Tooltip: ""
+		DisplayName: Iron Man Leggings (Mark 3)
+	}
+
+	Mk4Chestplate: {
+		Tooltip: ""
+		DisplayName: Iron Man Chestplate (Mark 4)
+	}
+
+	Mk4Helmet: {
+		Tooltip: ""
+		DisplayName: Iron Man Helmet (Mark 4)
+	}
+
+	Mk4Leggings: {
+		Tooltip: ""
+		DisplayName: Iron Man Leggings (Mark 4)
+	}
+
+	Mk5Chestplate: {
+		Tooltip: ""
+		DisplayName: Iron Man Chestplate (Mark 5)
+	}
+
+	Mk5Helmet: {
+		Tooltip: ""
+		DisplayName: Iron Man Helmet (Mark 5)
+	}
+
+	Mk5Leggings: {
+		Tooltip: ""
+		DisplayName: Iron Man Leggings (Mark 5)
+	}
+
+	Mk6Chestplate: {
+		Tooltip: ""
+		DisplayName: Iron Man Chestplate (Mark 6)
+	}
+
+	Mk6Helmet: {
+		Tooltip: ""
+		DisplayName: Iron Man Helmet (Mark 6)
+	}
+
+	Mk6Leggings: {
+		Tooltip: ""
+		DisplayName: Iron Man Leggings (Mark 6)
+	}
+
+	Mk7Chestplate: {
+		Tooltip: ""
+		DisplayName: Iron Man Chestplate (Mark 7)
+	}
+
+	Mk7Helmet: {
+		Tooltip: ""
+		DisplayName: Iron Man Helmet (Mark 7)
+	}
+
+	Mk7Leggings: {
+		Tooltip: ""
+		DisplayName: Iron Man Leggings (Mark 7)
+	}
+
+	ArsenalFlamethrower: {
+		DisplayName: Arsenal Flamethrower
+		Tooltip: ""
+	}
+
+	ArsenalFlares: {
+		DisplayName: Arsenal Flares
+		Tooltip: ""
+	}
+
+	ArsenalHeavyDutyMissile: {
+		DisplayName: Arsenal Heavy Duty Missile
+		Tooltip: ""
+	}
+
+	ArsenalLaser: {
+		DisplayName: Arsenal Laser
+		Tooltip: ""
+	}
+
+	ArsenalMicroGun: {
+		DisplayName: Arsenal Micro Gun
+		Tooltip: ""
+	}
+
+	ArsenalMicroMissile: {
+		DisplayName: Arsenal Micro Missile
+		Tooltip: ""
+	}
+
+	ArsenalPropelledGrenades: {
+		DisplayName: Arsenal Propelled Grenades
+		Tooltip: ""
+	}
+
+	ArsenalRepulsor: {
+		DisplayName: Arsenal Repulsor
+		Tooltip: ""
+	}
+
+	ArsenalSideWinderMissile: {
+		DisplayName: Arsenal Side Winder Missile
+		Tooltip: ""
+	}
+
+	ArsenalSpreadGrenades: {
+		DisplayName: Arsenal Spread Grenades
+		Tooltip: ""
+	}
+
+	ArsenalUnibeam: {
+		DisplayName: Arsenal Unibeam
+		Tooltip: ""
+	}
+
+	ArsenalLaserSystem: {
+		DisplayName: Arsenal Laser System
+		Tooltip: ""
+	}
+
+	ArsenalManuallyDeployedMissile: {
+		DisplayName: Arsenal Manually Deployed Missile
+		Tooltip: ""
+	}
+
+	ArsenalSideWinders: {
+		DisplayName: Arsenal Side Winders
+		Tooltip: ""
+	}
+
+	ArsenalCrudeFlamethrower: {
+		DisplayName: Arsenal Crude Flamethrower
+		Tooltip: ""
+	}
+
+	ArsenalCrudeMissile: {
+		DisplayName: Arsenal Crude Missile
+		Tooltip: ""
+	}
+}
+
+Keybinds: {
+	ToggleFlight.DisplayName: Iron Man | Toggle Flight
+	ToggleFaceplate.DisplayName: Iron Man | Toggle Faceplate
+	EjectSuit.DisplayName: Iron Man | Eject Suit
+}

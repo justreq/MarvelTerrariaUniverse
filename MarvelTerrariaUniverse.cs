@@ -1,48 +1,30 @@
-using MarvelTerrariaUniverse.Content.Items.IronMan;
-using System;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using Terraria.ModLoader;
+using MarvelTerrariaUniverse.Common.Net;
 
 namespace MarvelTerrariaUniverse;
-
-public enum Transformations
-{
-    None = 0,
-    IronMan = 1
-}
-
 public class MarvelTerrariaUniverse : Mod
 {
-    public const int IronManSuitMarkCount = 7;
-
-    public static Dictionary<List<string>, EquipType> TransformationTextures = new();
-    public static HashSet<string> TransformationTypes = new();
-    // ?
-    public override void Load()
+    public static MarvelTerrariaUniverse Instance => ModContent.GetInstance<MarvelTerrariaUniverse>();
+    public enum Transformation
     {
-        GetFileNames().Where(e => e.StartsWith("Assets/Textures/Transformations")).ToList().ForEach(file =>
-        {
-            var root = "Assets/Textures/Transformations/";
-            var path = file[root.Length..].Split("/");
-            var type = path.First(e => e.Contains(".rawimg")).Split(".")[0];
-            var name = path.Length == 3 ? $"{path[0]}{path[1]}" : path[1];
+        None = 0,
+        IronMan = 1
+    }
 
-            if (type.Contains("Alt"))
-            {
-                name += $"Alt{(type.Split("Alt").Length == 2 ? type.Split("Alt")[1] : "")}";
-                type = type.Split("Alt")[0];
+    public static Dictionary<string, string> CategorizedModKeybinds = new(); // unused for now... will be used when lolxd and i figure out the fuckery behind the keybind menu soontm
 
-            }
+    public const int IRONMANSUITS = 7;
+    public const int EXTRALOADOUTS = 1;
 
-            EquipLoader.AddEquipTexture(this, $"MarvelTerrariaUniverse/{file}".Split(".")[0], Enum.Parse<EquipType>(type), name: name);
-            TransformationTextures.Add(new() { name }, Enum.Parse<EquipType>(type));
-            TransformationTypes.Add(name);
-        });
+    public static readonly Color[,] CustomLoadoutColors = new Color[EXTRALOADOUTS, 3] {
+        { new(186, 12, 47), new(155, 17, 30), new(143, 7, 15) }
+    };
 
-        for (int i = 1; i <= MarvelTerrariaUniverse.IronManSuitMarkCount; i++)
-        {
-            AddContent(new SuitModuleItem(i));
-        }
+    public override void HandlePacket(BinaryReader reader, int whoAmI)
+    {
+        MTUNetMessages.HandlePacket(reader, whoAmI);
     }
 }

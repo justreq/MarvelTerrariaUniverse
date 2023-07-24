@@ -15,6 +15,11 @@ Mods: {
 			Helmet.DisplayName: Iron Man Helmet
 			Laser.DisplayName: Laser
 			Suit.DisplayName: Iron Man Suit
+			MjolnirLightning.DisplayName: Mjolnir Lightning
+			MjolnirThrow.DisplayName: Mjolnir Throw
+			MjolnirCharge.DisplayName: Mjolnir Charge
+			MjolnirChargedThrow.DisplayName: Mjolnir Charged Throw
+			MjolnirFly.DisplayName: Mjolnir Fly
 		}
 
 		Items: {
@@ -34,6 +39,11 @@ Mods: {
 
 			SuitModuleHub: {
 				DisplayName: Suit Module Hub
+				Tooltip: ""
+			}
+
+			Mjolnir: {
+				DisplayName: Mjolnir
 				Tooltip: ""
 			}
 		}

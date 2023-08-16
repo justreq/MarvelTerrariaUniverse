@@ -186,7 +186,4 @@ Items: {
 }
 
 Keybinds: {
-	ToggleFlight.DisplayName: Iron Man | Toggle Flight
-	ToggleFaceplate.DisplayName: Iron Man | Toggle Faceplate
-	EjectSuit.DisplayName: Iron Man | Eject Suit
 }

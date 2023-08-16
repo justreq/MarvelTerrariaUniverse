@@ -13,6 +13,9 @@
 		<None Remove="Assets\Textures\Transformations\IronMan\Mark2\Faceplate\**" />
 	</ItemGroup>
 	<ItemGroup>
+	  <None Remove="Content\Items\Accessories\IronMan\AirDust - Copy.png" />
+	  <None Remove="Content\Items\Accessories\IronMan\MjolnirFly.png" />
+	  <None Remove="Content\Items\Weapons\Mjolnir\MjolnirProjectile.png" />
 	  <None Remove="Localization\en-US.hjson" />
 	</ItemGroup>
 	<ItemGroup>
@@ -24,6 +27,6 @@
 	  </None>
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Content\Items\Projectiles\" />
+	  <Folder Include="Content\Dusts\" />
 	</ItemGroup>
 </Project>

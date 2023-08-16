@@ -15,7 +15,7 @@ namespace MarvelTerrariaUniverse.Utilities;
 // EVERYTHING HERE IS FOR DEBUGGING PURPOSES AND WILL NOT BE ACCESSIBLE IN ANY PUBLICLY AVAILABLE BUILDS OF THE MOD :)
 // DONT TOUCH ANYTHING HERE BTW PLS THX BYE LUV YA BYE <3
 
-#if DEBUG
+//#if DEBUG
 
 class AutoJoinWorldSystem : ModSystem
 {
@@ -83,4 +83,4 @@ class EquipCommand : ModCommand
     }
 }
 
-#endif
+//#endif

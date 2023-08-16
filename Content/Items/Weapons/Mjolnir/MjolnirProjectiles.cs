@@ -321,7 +321,7 @@ namespace MarvelTerrariaUniverse.Content.Items.Weapons.Mjolnir
                     y = nPC.Center.Y;
                 }
 
-                if(x ==0 && y == 0)
+                if(x == 0 && y == 0)
                 {
                     x = Main.MouseWorld.X;
                     y = Main.MouseWorld.Y;

@@ -40,6 +40,8 @@ public class IronManPlayer : ModPlayer
 
     public int SuitCycleTimer = 0;
 
+    public int ArmorMode = 0;
+
     public bool HelmetClosed = true;
     public bool PlayFaceplateAnimation = false;
     public int FaceplateAnimationTimer = 0;
@@ -157,6 +159,11 @@ public class IronManPlayer : ModPlayer
         {
             Player.mount.Dismount(Player);
         }
+    }
+
+    public void ToggleArmorMode()
+    {
+        ArmorMode = ArmorMode == 0 ? 1 : 0;
     }
 
     public void UpdateFlight()
@@ -291,6 +298,8 @@ public class IronManPlayer : ModPlayer
         if (KeybindSystem.ToggleFaceplate.JustPressed && !PlayFaceplateAnimation) PlayFaceplateAnimation = true;
 
         if (KeybindSystem.ToggleFlight.JustPressed) ToggleFlight();
+
+        if (KeybindSystem.ArmorMode.JustPressed) ToggleArmorMode();
     }
 
     public override void Load()

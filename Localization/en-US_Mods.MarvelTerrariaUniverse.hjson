@@ -187,3 +187,10 @@ Items: {
 
 Keybinds: {
 }
+
+Buffs: {
+	Waterlogged: {
+		DisplayName: Waterlogged
+		Description: Mods.MarvelTerrariaUniverse.Buffs.Waterlogged.Description
+	}
+}

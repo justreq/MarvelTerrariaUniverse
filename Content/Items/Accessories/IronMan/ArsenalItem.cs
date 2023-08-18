@@ -1,5 +1,6 @@
 ﻿using MarvelTerrariaUniverse.Common.CustomLoadout;
 using MarvelTerrariaUniverse.Common.Players;
+using MarvelTerrariaUniverse.Content.Buffs;
 using MarvelTerrariaUniverse.Content.Items.Armor.IronMan;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
@@ -65,5 +66,14 @@ public abstract class ArsenalItem : ModItem
         if (Selected && Main.mouseLeft) UpdateArsenal(player);
     }
 
-    public virtual void UpdateArsenal(Player player) { }
+    public virtual void UpdateArsenal(Player player) {
+        if (player.HasBuff(ModContent.BuffType<Waterlogged>()))
+        {
+            return;
+        }
+        else if (player.HasBuff(BuffID.Frozen))
+        {
+            return;
+        }
+    }
 }

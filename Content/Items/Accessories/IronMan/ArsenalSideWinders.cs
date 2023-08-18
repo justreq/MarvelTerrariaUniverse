@@ -4,11 +4,12 @@ using System.Threading;
 using Terraria;
 using Terraria.ModLoader;
 using MarvelTerrariaUniverse.Common.Players;
+using MarvelTerrariaUniverse.Content.Buffs;
+
 namespace MarvelTerrariaUniverse.Content.Items.Accessories.IronMan;
 public class ArsenalSideWinders : ArsenalItem
 {
     //get the current instance of iron man player
-    private IronManPlayer ironManPlayer = Main.LocalPlayer.GetModPlayer<IronManPlayer>();
     private int ArmorMode = 0;
     private int cd = 0;
     private int releaseTimer = 0;
@@ -16,6 +17,11 @@ public class ArsenalSideWinders : ArsenalItem
     private bool activated = false;
     public override void UpdateArsenal(Player player)
     {
+        base.UpdateArsenal(player);
+        if (player.HasBuff(ModContent.BuffType<Waterlogged>()))
+        {
+            return;
+        }
         if (offCD) activated = true;
 
     }
@@ -23,6 +29,7 @@ public class ArsenalSideWinders : ArsenalItem
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
         base.UpdateAccessory(player, hideVisual);
+        IronManPlayer ironManPlayer = Main.LocalPlayer.GetModPlayer<IronManPlayer>();
         ArmorMode = ironManPlayer.ArmorMode;
         // create a vector 2 that just goes down
         if (ArmorMode == 0)

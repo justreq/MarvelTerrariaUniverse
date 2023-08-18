@@ -1,5 +1,6 @@
 ﻿using MarvelTerrariaUniverse.Common.CustomLoadout;
 using MarvelTerrariaUniverse.Common.Net;
+using MarvelTerrariaUniverse.Content.Buffs;
 using MarvelTerrariaUniverse.Content.Items.Armor.IronMan;
 using MarvelTerrariaUniverse.Content.Mounts;
 using Microsoft.Xna.Framework;
@@ -151,7 +152,7 @@ public class IronManPlayer : ModPlayer
     {
         CurrentSuitState = CurrentSuitState != SuitState.None ? SuitState.None : SuitState.Flying;
 
-        if (CurrentSuitState != SuitState.None)
+        if (CurrentSuitState != SuitState.None && !Player.HasBuff(ModContent.BuffType<Waterlogged>()))
         {
             Player.mount.SetMount(ModContent.MountType<IronManFlight>(), Player, Player.direction == -1);
         }
@@ -168,6 +169,7 @@ public class IronManPlayer : ModPlayer
 
     public void UpdateFlight()
     {
+
         if ((!Player.controlUp && !Player.controlRight && !Player.controlDown && !Player.controlLeft && !Player.controlJump) || ((Math.Abs(Player.velocity.X) < 0.1f && Math.Abs(Player.velocity.Y) < 0.1f))) CurrentSuitState = SuitState.Hovering;
         else CurrentSuitState = SuitState.Flying;
 
@@ -221,6 +223,7 @@ public class IronManPlayer : ModPlayer
         }
 
         UpdateFlightFlameAnimation(5);
+
     }
 
     public void UpdateFlightFlameAnimation(int framerate)
@@ -234,9 +237,11 @@ public class IronManPlayer : ModPlayer
         }
     }
 
+
     public override void PostUpdate()
     {
-        if (Mark == 0) return;
+        if (Player.HasBuff(BuffID.Frozen) || Player.HasBuff(ModContent.BuffType<Waterlogged>())) { CurrentSuitState = SuitState.None; Player.mount.Dismount(Player); }
+            if (Mark == 0) return;
 
         // CycleSuits(60);
 

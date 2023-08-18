@@ -1,6 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using MarvelTerrariaUniverse.Content.Buffs;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace MarvelTerrariaUniverse.Content.Items.Accessories.IronMan;
 public class ArsenalCrudeFlamethrower : ArsenalItem
@@ -10,10 +12,14 @@ public class ArsenalCrudeFlamethrower : ArsenalItem
     public override void UpdateArsenal(Player player)
     {
         // this runs every frame when you have the arsenal selected and press the left mouse button
-
+        base.UpdateArsenal(player);
+        if (player.HasBuff(ModContent.BuffType<Waterlogged>()))
+        {
+            return;
+        }
         //limiting ammo usage so its not as fast as my old car uses gas
         //also making it pause every few frames so its not OP - WIP
-        
+
 
         //calculate the vector 2 of the mouse position relative to the player
         Vector2 mousePos = Main.MouseWorld;

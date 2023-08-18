@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using MarvelTerrariaUniverse.Content.Projectiles.Arsenal;
+using MarvelTerrariaUniverse.Content.Buffs;
 
 namespace MarvelTerrariaUniverse.Content.Items.Accessories.IronMan;
 public class ArsenalFlares : ArsenalItem
@@ -15,6 +16,11 @@ public class ArsenalFlares : ArsenalItem
     private float angleTest = MathHelper.PiOver4;
     public override void UpdateArsenal(Player player)
     {
+        base.UpdateArsenal(player);
+        if (player.HasBuff(ModContent.BuffType<Waterlogged>()))
+        {
+            return;
+        }
         if (activateCd) { launchCd = true; activateCd = false; }
     }
     public override void UpdateAccessory(Player player, bool hideVisual)

@@ -1,4 +1,5 @@
-﻿using MarvelTerrariaUniverse.Content.Projectiles.Arsenal;
+﻿using MarvelTerrariaUniverse.Content.Buffs;
+using MarvelTerrariaUniverse.Content.Projectiles.Arsenal;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
@@ -10,6 +11,11 @@ public class ArsenalCrudeMissile : ArsenalItem
     bool offCD = true;
     public override void UpdateArsenal(Player player)
     {
+        base.UpdateArsenal(player);
+        if (player.HasBuff(ModContent.BuffType<Waterlogged>()))
+        {
+            return;
+        }
         Vector2 mousePos = Main.MouseWorld;
         Vector2 relativeMousePos = mousePos - player.Center;
         relativeMousePos = Vector2.Normalize(relativeMousePos) * 10;

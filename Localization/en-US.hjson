@@ -59,6 +59,7 @@ Mods: {
 			DropHelmet.DisplayName: Drop Helmet
 			EjectSuit.DisplayName: Eject Suit
 			ReloadUI.DisplayName: Reload UI
+			ToggleArmorMode.DisplayName: Toggle Armor Mode
 		}
 
 		IronMan: {

@@ -11,6 +11,7 @@ public class ArsenalCrudeFlamethrower : ArsenalItem
     private int ammoFrameLimit = 0;
     public override void UpdateArsenal(Player player)
     {
+
         // this runs every frame when you have the arsenal selected and press the left mouse button
         base.UpdateArsenal(player);
         if (player.HasBuff(ModContent.BuffType<Waterlogged>()))

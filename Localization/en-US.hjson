@@ -1,0 +1,105 @@
+Mods: {
+	MarvelTerrariaUniverse: {
+		Common: {
+			IronManSuitModule: {
+				DisplayName: Iron Man Suit Module (Mark {0})
+				Tooltip:
+					'''
+					A module containing the mechanics of the Mark {0} Iron Man Armor
+					Can be displayed and equipped using a Display Case
+					'''
+			}
+		}
+
+		Projectiles: {
+			Helmet.DisplayName: Iron Man Helmet
+			Laser.DisplayName: Laser
+			Suit.DisplayName: Iron Man Suit
+			MjolnirLightning.DisplayName: Mjolnir Lightning
+			MjolnirThrow.DisplayName: Mjolnir Throw
+			MjolnirCharge.DisplayName: Mjolnir Charge
+			MjolnirChargedThrow.DisplayName: Mjolnir Charged Throw
+			MjolnirFly.DisplayName: Mjolnir Fly
+			AirFlame.DisplayName: Air Flame
+			MjolnirProjectile.DisplayName: Mjolnir Projectile
+			CrudeMissile.DisplayName: Crude Missile
+			Missile.DisplayName: Missile
+			Flares.DisplayName: Flares
+			Repulsor.DisplayName: Repulsor
+			Unibeam.DisplayName: Unibeam
+		}
+
+		Items: {
+			DisplayCase: {
+				DisplayName: Display Case
+				Tooltip:
+					'''
+					Displays certain types of armor
+					Can be used in conjunction with certain machines
+					'''
+			}
+
+			SuitModuleController: {
+				DisplayName: Suit Module Controller
+				Tooltip: ""
+			}
+
+			SuitModuleHub: {
+				DisplayName: Suit Module Hub
+				Tooltip: ""
+			}
+
+			Mjolnir: {
+				DisplayName: Mjolnir
+				Tooltip: ""
+			}
+
+			GantryTileItem: {
+				DisplayName: Gantry Tile Item
+				Tooltip: ""
+			}
+		}
+
+		Keybinds: {
+			ToggleFlight.DisplayName: Toggle Flight
+			ToggleFaceplate.DisplayName: Toggle Faceplate
+			DropHelmet.DisplayName: Drop Helmet
+			EjectSuit.DisplayName: Eject Suit
+			ReloadUI.DisplayName: Reload UI
+			ToggleArmorMode.DisplayName: Toggle Armor Mode
+		}
+
+		IronMan: {
+			Name: Mark {0}
+
+			1: {
+			}
+
+			2: {
+			}
+
+			3: {
+			}
+
+			4: {
+			}
+
+			5.Alias: Suitcase
+
+			6: {
+			}
+
+			7: {
+			}
+		}
+
+		NPCs.IronMonger.DisplayName: Iron Monger
+
+		Tiles: {
+			GantryTile: {
+				MapEntry0: Mods.MarvelTerrariaUniverse.Tiles.GantryTile.MapEntry0
+				MapEntry1: Mods.MarvelTerrariaUniverse.Tiles.GantryTile.MapEntry1
+			}
+		}
+	}
+}

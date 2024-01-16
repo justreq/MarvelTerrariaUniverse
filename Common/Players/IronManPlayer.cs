@@ -1,5 +1,6 @@
 ﻿using MarvelTerrariaUniverse.Common.CustomLoadout;
 using MarvelTerrariaUniverse.Common.Net;
+using MarvelTerrariaUniverse.Content.Buffs;
 using MarvelTerrariaUniverse.Content.Items.Armor.IronMan;
 using MarvelTerrariaUniverse.Content.Mounts;
 using Microsoft.Xna.Framework;
@@ -39,6 +40,8 @@ public class IronManPlayer : ModPlayer
     public int LastUsedLoadoutIndex = 0;
 
     public int SuitCycleTimer = 0;
+
+    public int ArmorMode = 0;
 
     public bool HelmetClosed = true;
     public bool PlayFaceplateAnimation = false;
@@ -149,7 +152,7 @@ public class IronManPlayer : ModPlayer
     {
         CurrentSuitState = CurrentSuitState != SuitState.None ? SuitState.None : SuitState.Flying;
 
-        if (CurrentSuitState != SuitState.None)
+        if (CurrentSuitState != SuitState.None && !Player.HasBuff(ModContent.BuffType<Waterlogged>()))
         {
             Player.mount.SetMount(ModContent.MountType<IronManFlight>(), Player, Player.direction == -1);
         }
@@ -159,8 +162,14 @@ public class IronManPlayer : ModPlayer
         }
     }
 
+    public void ToggleArmorMode()
+    {
+        ArmorMode = ArmorMode == 0 ? 1 : 0;
+    }
+
     public void UpdateFlight()
     {
+
         if ((!Player.controlUp && !Player.controlRight && !Player.controlDown && !Player.controlLeft && !Player.controlJump) || ((Math.Abs(Player.velocity.X) < 0.1f && Math.Abs(Player.velocity.Y) < 0.1f))) CurrentSuitState = SuitState.Hovering;
         else CurrentSuitState = SuitState.Flying;
 
@@ -214,6 +223,7 @@ public class IronManPlayer : ModPlayer
         }
 
         UpdateFlightFlameAnimation(5);
+
     }
 
     public void UpdateFlightFlameAnimation(int framerate)
@@ -227,9 +237,11 @@ public class IronManPlayer : ModPlayer
         }
     }
 
+
     public override void PostUpdate()
     {
-        if (Mark == 0) return;
+        if (Player.HasBuff(BuffID.Frozen) || Player.HasBuff(ModContent.BuffType<Waterlogged>())) { CurrentSuitState = SuitState.None; Player.mount.Dismount(Player); }
+            if (Mark == 0) return;
 
         // CycleSuits(60);
 
@@ -291,6 +303,8 @@ public class IronManPlayer : ModPlayer
         if (KeybindSystem.ToggleFaceplate.JustPressed && !PlayFaceplateAnimation) PlayFaceplateAnimation = true;
 
         if (KeybindSystem.ToggleFlight.JustPressed) ToggleFlight();
+
+        if (KeybindSystem.ArmorMode.JustPressed) ToggleArmorMode();
     }
 
     public override void Load()

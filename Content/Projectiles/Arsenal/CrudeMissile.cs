@@ -73,7 +73,7 @@ namespace MarvelTerrariaUniverse.Content.Projectiles.Arsenal
             return true;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (Projectile.owner == Main.myPlayer && Projectile.ai[0] == 0)
             {  

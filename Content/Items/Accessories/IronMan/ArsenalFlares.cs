@@ -28,12 +28,15 @@ public class ArsenalFlares : ArsenalItem
 
         base.UpdateAccessory(player, hideVisual);
 
+        // cooldown reset
         cdTimer += 1;
         if (cdTimer >= 15 * 60)
         {
             activateCd = true;
             cdTimer = 0;
         }
+
+        // flare launching
         if (launchCd)
         {
             launchDelay += 1;

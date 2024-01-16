@@ -2,7 +2,6 @@
 using MarvelTerrariaUniverse.Content.Projectiles.Arsenal;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 
@@ -14,10 +13,6 @@ public class ArsenalMicroMissile : ArsenalItem
     public override void UpdateArsenal(Player player)
     {
         base.UpdateArsenal(player);
-        if (player.HasBuff(ModContent.BuffType<Waterlogged>()))
-        {
-            return;
-        }
         if (player.HasBuff(ModContent.BuffType<Waterlogged>()))
         {
             return;

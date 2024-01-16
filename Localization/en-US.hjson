@@ -25,6 +25,8 @@ Mods: {
 			CrudeMissile.DisplayName: Crude Missile
 			Missile.DisplayName: Missile
 			Flares.DisplayName: Flares
+			Repulsor.DisplayName: Repulsor
+			Unibeam.DisplayName: Unibeam
 		}
 
 		Items: {
@@ -49,6 +51,11 @@ Mods: {
 
 			Mjolnir: {
 				DisplayName: Mjolnir
+				Tooltip: ""
+			}
+
+			GantryTileItem: {
+				DisplayName: Gantry Tile Item
 				Tooltip: ""
 			}
 		}
@@ -83,6 +90,15 @@ Mods: {
 			}
 
 			7: {
+			}
+		}
+
+		NPCs.IronMonger.DisplayName: Iron Monger
+
+		Tiles: {
+			GantryTile: {
+				MapEntry0: Mods.MarvelTerrariaUniverse.Tiles.GantryTile.MapEntry0
+				MapEntry1: Mods.MarvelTerrariaUniverse.Tiles.GantryTile.MapEntry1
 			}
 		}
 	}

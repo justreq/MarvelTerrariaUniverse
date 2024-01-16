@@ -14,8 +14,11 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <None Remove="Content\Items\Accessories\IronMan\AirDust - Copy.png" />
+	  <None Remove="Content\Items\Accessories\IronMan\IronManRepulsorwait.png" />
 	  <None Remove="Content\Items\Accessories\IronMan\MjolnirFly.png" />
 	  <None Remove="Content\Items\Weapons\Mjolnir\MjolnirProjectile.png" />
+	  <None Remove="Content\Projectiles\Arsenal\Unibeam.png" />
+	  <None Remove="Content\Tiles\Gantry\GantryTile.png" />
 	  <None Remove="Localization\en-US.hjson" />
 	</ItemGroup>
 	<ItemGroup>
@@ -28,5 +31,8 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Content\Dusts\" />
+	  <Folder Include="Content\NPCs\Boss\IronMongerTest\" />
+	  <Folder Include="Content\NPCs\Town\" />
+	  <Folder Include="Content\Projectiles\Boss\IronMonger\" />
 	</ItemGroup>
 </Project>

@@ -11,7 +11,7 @@ namespace MarvelTerrariaUniverse.Content.Projectiles.Arsenal
         private int explosionRadius = 200;
         public override void SetDefaults()
         {
-            Projectile.Name = "Crude Missile";
+            Projectile.Name = "Micro Missile";
             Projectile.width = 26;
             Projectile.height = 10;
             Projectile.friendly = true;
@@ -73,7 +73,7 @@ namespace MarvelTerrariaUniverse.Content.Projectiles.Arsenal
             return true;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (Projectile.owner == Main.myPlayer && Projectile.ai[0] == 0)
             {
